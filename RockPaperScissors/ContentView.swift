@@ -15,6 +15,9 @@ struct ContentView: View {
     @State private var winOrLose = Bool.random()
     
     @State private var score = 0
+    @State private var numberOfTurns = 0
+    
+    @State private var isGameOver = false
     
     var body: some View {
         ZStack {
@@ -50,6 +53,11 @@ struct ContentView: View {
                                 .font(.system(size: 100))
                         }
                     }
+                }
+                .alert("Game over!", isPresented: $isGameOver) {
+                        Button("Continue", action: restartGame)
+                } message: {
+                    Text("Your score is \(score).\nTap \"Continue\" to restart the game.")
                 }
                 Spacer()
                 Spacer()
@@ -91,8 +99,20 @@ struct ContentView: View {
             return
         }
         
+        numberOfTurns += 1
+        
+        if numberOfTurns == 2 {
+            isGameOver = true
+        } else {
+            winOrLose.toggle()
+            confrontingShape = Int.random(in: 0 ..< 3)
+        }
+    }
+    
+    func restartGame() {
         winOrLose.toggle()
         confrontingShape = Int.random(in: 0 ..< 3)
+        score = 0
     }
 }
 
