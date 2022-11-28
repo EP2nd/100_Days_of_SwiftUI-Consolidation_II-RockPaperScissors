@@ -22,9 +22,9 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             LinearGradient(stops: [
-                .init(color: .black, location: 0),
+                .init(color: .black, location: 0.2),
                 .init(color: .white, location: 0.7),
-                .init(color: .red, location: 1)
+                .init(color: .pink, location: 0.8)
             ], startPoint: .top, endPoint: .bottom)
             .ignoresSafeArea()
             
@@ -38,11 +38,16 @@ struct ContentView: View {
                 Text("Your score: \(score)")
                     .font(.subheadline.weight(.heavy))
                     .foregroundColor(.red)
-                Text("\(shapes[confrontingShape])")
-                    .font(.system(size: 200))
-                Text("\(winOrLose ? "- Win!" : "- Lose!")")
-                    .italic()
-                    .bold()
+                VStack {
+                    Text("\(shapes[confrontingShape])")
+                        .font(.system(size: 200))
+                    Text("\(winOrLose ? "- Win!" : "- Lose!")")
+                        .italic()
+                        .bold()
+                }
+                .frame(width: 300, height: 300)
+                .background(.regularMaterial)
+                .clipShape(Circle())
                 Spacer()
                 HStack {
                     ForEach(0..<3) { emoji in
@@ -57,7 +62,7 @@ struct ContentView: View {
                 .alert("Game over!", isPresented: $isGameOver) {
                         Button("Continue", action: restartGame)
                 } message: {
-                    Text("Your score is \(score).\nTap \"Continue\" to restart the game.")
+                    Text("You scored \(score) out of \(numberOfTurns).\nTap \"Continue\" to play again.")
                 }
                 Spacer()
                 Spacer()
@@ -101,7 +106,7 @@ struct ContentView: View {
         
         numberOfTurns += 1
         
-        if numberOfTurns == 2 {
+        if numberOfTurns == 10 {
             isGameOver = true
         } else {
             winOrLose.toggle()
@@ -113,6 +118,7 @@ struct ContentView: View {
         winOrLose.toggle()
         confrontingShape = Int.random(in: 0 ..< 3)
         score = 0
+        numberOfTurns = 0
     }
 }
 
