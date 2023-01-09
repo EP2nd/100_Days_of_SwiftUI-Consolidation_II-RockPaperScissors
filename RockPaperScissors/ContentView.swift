@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    private var shapes = ["🪨", "🧻", "✂️"]
+    let shapes = ["🪨", "🧻", "✂️"]
     
     @State private var confrontingShape = Int.random(in: 0 ..< 3)
     @State private var winOrLose = Bool.random()
@@ -41,6 +41,7 @@ struct ContentView: View {
                 VStack {
                     Text("\(shapes[confrontingShape])")
                         .font(.system(size: 200))
+                        .shadow(radius: 10)
                     Text("\(winOrLose ? "- Win!" : "- Lose!")")
                         .italic()
                         .bold()
@@ -48,6 +49,7 @@ struct ContentView: View {
                 .frame(width: 300, height: 300)
                 .background(.regularMaterial)
                 .clipShape(Circle())
+                .shadow(radius: 10)
                 Spacer()
                 HStack {
                     ForEach(0..<3) { emoji in
@@ -56,6 +58,7 @@ struct ContentView: View {
                         } label: {
                             Text("\(shapes[emoji])")
                                 .font(.system(size: 100))
+                                .shadow(radius: 10)
                         }
                     }
                 }
